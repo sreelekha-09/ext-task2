@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+    <script src="angular.min.js"></script>
+    <script src=""></script>
+    <script src="popup.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo</title>
+</head>
+<body>
+    <div ng-controller="emailSenderController">
+        <div>
+            <button ng-click="showNew()">
+                New
+            </button>
+            <button ng-click="showOld()">
+                Old
+            </button>
+        </div>
+        <div ng-if="new == 1">
+            <form name ="emailForm" ng-submit="submitEmailForm()" >
+                <label for="to" >To: </label><br />
+                <input type="email" name="to" id="to" ng-model="email.to" required /> <br />
+                <div ng-show="emailForm.to.$touched && emailForm.to.$invalid">
+                    <small style="color:red;display:block;">Must be Email</small>
+                </div>
+
+                <label >Compose</label><br />
+                <textarea  name="Compose" ng-model="email.compose" ng-minlength="2" required></textarea><br />
+
+                <div ng-show="emailForm.Compose.$touched && emailForm.Compose.$invalid">
+                    <small style="color:red;display:block;">Minimum 2 letters required</small>
+                </div>
+            <input type="submit" value="Send" ng-disabled="emailForm.$invalid"/> 
+            <input type="reset" ng-click="resetForm()" value="Reset" /> <br />
+        </form>
+        </div>
+        <div ng-if="new == 0">  
+            <ul>
+                <li ng-repeat="email in emails track by $index">
+                    <div ng-click="showEmailCompose(email)">
+                        {{email.to}} {{email.sentDate | date:'medium'}}
+                    </div>
+                   
+                    <div ng-show="email.show">{{email.compose}} </div>
+                </li>
+            </ul>
+        </div>
+        
+      </div>
+      
+</body>
+</html>
