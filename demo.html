@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="myApp">
     <script src="angular.min.js"></script>
-    <script src=""></script>
+    <script src="angular-animate.min.js"></script>
+    <script src="angular-aria.min.js"></script>
+    <script src="angular-messages.min.js"></script>
+    <script src="angular-material.min.js"></script>
     <script src="popup.js"></script>
+    <link rel="stylesheet" href="angular-material.min.css">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demo</title>
 </head>
-<body>
+<body style="width: 500px;">
     <div ng-controller="emailSenderController">
         <div>
             <button ng-click="showNew()">
