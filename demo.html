@@ -1,55 +1,81 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="myApp">
-    <script src="angular.min.js"></script>
-    <script src=""></script>
-    <script src="popup.js"></script>
+<script src="angular.min.js"></script>
+<script src="angular-animate.min.js"></script>
+<script src="angular-aria.min.js"></script>
+<script src="angular-messages.min.js"></script>
+<script src="angular-material.min.js"></script>
+<script src="popup.js"></script>
+<link rel="stylesheet" href="angular-material.min.css">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demo</title>
 </head>
-<body>
+
+<body style="width: 500px;">
     <div ng-controller="emailSenderController">
-        <div>
-            <button ng-click="showNew()">
-                New
-            </button>
-            <button ng-click="showOld()">
-                Old
-            </button>
-        </div>
-        <div ng-if="new == 1">
-            <form name ="emailForm" ng-submit="submitEmailForm()" >
-                <label for="to" >To: </label><br />
-                <input type="email" name="to" id="to" ng-model="email.to" required /> <br />
-                <div ng-show="emailForm.to.$touched && emailForm.to.$invalid">
-                    <small style="color:red;display:block;">Must be Email</small>
-                </div>
+        <div ng-cloak>
+            <md-content>
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="New">
+                        <md-content class="md-padding">
+                            <form name="emailForm" ng-submit="submitEmailForm()" novalidate>
+                                <md-input-container>
+                                    <label for="to">To: </label><br />
+                                    <input type="email" name="to" id="to" ng-model="email.to" required
+                                        ng-pattern="/^.+@.+\..+$/" /> <br />
+                                    <div ng-messages="emailForm.to.$error">
+                                        <div ng-message-exp="['required','pattern']">Must be in email format</div>
+                                    </div>
+                                </md-input-container>
 
-                <label >Compose</label><br />
-                <textarea  name="Compose" ng-model="email.compose" ng-minlength="2" required></textarea><br />
+                                <!-- <div ng-show="emailForm.to.$touched && emailForm.to.$invalid">
+                                    <small style="color:red;display:block;">Must be Email</small>
+                                </div> -->
+                                </br>
+                                <md-input-container class="md-block">
+                                    <label>Compose</label><br />
+                                    <textarea name="Compose" ng-model="email.compose" minlength="10"
+                                        required></textarea><br />
+                                    <div ng-messages="emailForm.Compose.$error">
+                                        <div ng-message-exp="['required','minlength']">Min 10 characters required</div>
+                                    </div>
+                                </md-input-container>
 
-                <div ng-show="emailForm.Compose.$touched && emailForm.Compose.$invalid">
-                    <small style="color:red;display:block;">Minimum 2 letters required</small>
-                </div>
-            <input type="submit" value="Send" ng-disabled="emailForm.$invalid"/> 
-            <input type="reset" ng-click="resetForm()" value="Reset" /> <br />
-        </form>
+
+                                <!-- <div ng-show="emailForm.Compose.$touched && emailForm.Compose.$invalid">
+                                    <small style="color:red;display:block;">Minimum 2 letters required</small>
+                                </div> -->
+                                </br>
+                                <md-button type="submit" value="Send" ng-disabled="emailForm.$invalid"
+                                    class="md-raised md-primary">Send
+                                </md-button>
+                            </form>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="old">
+                        <md-content class="md-padding">
+                            <ul>
+                                <li ng-repeat="email in emails track by $index">
+                                    <div style="font-size:15px;font-family: Segoe UI, Tahoma, sans-serif;"
+                                        ng-click="showEmailCompose(email)">
+                                        {{"TO: "}}{{email.to}} {{"Date: "}} {{email.sentDate | date:'medium'}}
+                                    </div>
+                                    <div ng-show="email.show">{{email.compose}} </div>
+                                    <md-divider></md-divider>
+                                </li>
+
+                            </ul>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </md-content>
         </div>
-        <div ng-if="new == 0">  
-            <ul>
-                <li ng-repeat="email in emails track by $index">
-                    <div ng-click="showEmailCompose(email)">
-                        {{email.to}} {{email.sentDate | date:'medium'}}
-                    </div>
-                   
-                    <div ng-show="email.show">{{email.compose}} </div>
-                </li>
-            </ul>
-        </div>
-        
-      </div>
-      
+    </div>
+
 </body>
+
 </html>
