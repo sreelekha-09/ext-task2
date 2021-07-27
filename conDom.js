@@ -1,11 +1,11 @@
-chrome.runtime.onConnect.addListener(function(port) {
-    console.assert(port.name == "knockknock");
-    port.onMessage.addListener(function(msg) {
-      if (msg.joke == "Knock knock"){
-          console.log(msg.joke);
-      }
-    });
-  });
+// chrome.runtime.onConnect.addListener(function(port) {
+//     console.assert(port.name == "knockknock");
+//     port.onMessage.addListener(function(msg) {
+//       if (msg.joke == "Knock knock"){
+//           console.log(msg.joke);
+//       }
+//     });
+//   });
 
 // document.addEventListener('mouseup',function(event)
 // {
@@ -29,17 +29,18 @@ chrome.runtime.onConnect.addListener(function(port) {
 // });
 
 console.log("content");
-// chrome.runtime.onMessage.addListener(
-//     function(request, sender, sendResponse) {
-//         if (request.message == "extClicked")
-//         {
-//            var selectedText = window.getSelection().toString();
-//            console.log(selectedText);
-//            if(selectedText.length)
-//            {
-//                 chrome.runtime.sendMessage({'message':'textSelected','data': selectedText},function(response){});
-//            }
-//         }
-//     }
-//   );
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if (request.message == "extClicked")
+        {
+           var selectedText = window.getSelection().toString();
+           console.log(selectedText);
+           sendResponse(selectedText);
+          //  if(selectedText.length)
+          //  {
+          //       chrome.runtime.sendMessage({'message':'textSelected','data': selectedText},function(response){});
+          //  }
+        }
+    }
+  );
 

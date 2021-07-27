@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="myApp">
     <script src="angular.min.js"></script>
-    <script src=""></script>
+    <script src="angular-animate.min.js"></script>
+    <script src="angular-aria.min.js"></script>
+    <script src="angular-messages.min.js"></script>
+    <script src="angular-material.min.js"></script>
     <script src="popup.js"></script>
+    <link rel="stylesheet" href="angular-material.min.css">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demo</title>
 </head>
-<body>
+<body style="width: 500px;">
     <div ng-controller="emailSenderController">
         <div>
             <button ng-click="showNew()">
@@ -20,7 +24,7 @@
             </button>
         </div>
         <div ng-if="new == 1">
-            <form name ="emailForm" ng-submit="submitEmailForm()" >
+            <form name ="emailForm" ng-submit="submitEmailForm()" novalidate>
                 <label for="to" >To: </label><br />
                 <input type="email" name="to" id="to" ng-model="email.to" required /> <br />
                 <div ng-show="emailForm.to.$touched && emailForm.to.$invalid">
@@ -34,7 +38,7 @@
                     <small style="color:red;display:block;">Minimum 2 letters required</small>
                 </div>
             <input type="submit" value="Send" ng-disabled="emailForm.$invalid"/> 
-            <input type="reset" ng-click="resetForm()" value="Reset" /> <br />
+            <!-- <input type="reset" ng-click="resetForm()" value="Reset" /> <br /> -->
         </form>
         </div>
         <div ng-if="new == 0">  
