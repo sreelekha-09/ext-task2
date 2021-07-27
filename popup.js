@@ -1,8 +1,7 @@
-var myapp=angular.module('myApp',[]);
-
-
-var port = chrome.runtime.connect({name: "knockknock"});
-port.postMessage({joke: "Knock knock"});
+var myapp=angular.module('myApp',['ngMaterial', 'ngMessages']);
+let populatedCompose="";
+// var port = chrome.runtime.connect({name: "knockknock"});
+// port.postMessage({joke: "Knock knock"});
 
 // chrome.tabs.query({active: true, currentWindow: true},function(tabs) {
 //     chrome.runtime.sendMessage({'message':'extClicked'},function(response){
@@ -34,6 +33,12 @@ port.postMessage({joke: "Knock knock"});
 
 myapp.controller("emailSenderController", function ($scope, $http) {
   
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {'message':'extClicked'}, function(response){
+       populatedCompose=response;
+    });
+});
+
     $scope.emptyMail = {
         to: '',
         compose: ''
@@ -51,7 +56,7 @@ myapp.controller("emailSenderController", function ($scope, $http) {
         $scope.new=1;
     };
     $scope.email = angular.copy($scope.emptyMail);
-
+    $scope.email.compose=populatedCompose;
     $scope.submitEmailForm = function () {
 
         console.log($scope.email.to,$scope.email.compose);
